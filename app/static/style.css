@@ -1,0 +1,25 @@
+:root { --bg:#f5f5f2; --card:#fff; --ink:#1d1d1f; --muted:#6b6b70; --line:#dedcd6; --accent:#2f5bd3; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--ink); }
+header { padding:24px 16px 8px; max-width:1120px; margin:0 auto; }
+h1 { margin:0; font-size:1.6rem; }
+h2 { font-size:1rem; margin:0 0 12px; color:var(--muted); font-weight:600; }
+.sub { margin:4px 0 10px; color:var(--muted); }
+.pill { display:inline-block; font-size:.8rem; padding:3px 10px; border-radius:999px; background:#e8e6e0; }
+.pill.ok { background:#d9f2df; color:#14632b; } .pill.err { background:#fbe0dd; color:#8a1f12; }
+main { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; max-width:1120px; margin:0 auto; padding:16px; }
+.panel { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; }
+canvas, #result { width:100%; aspect-ratio:1; border:1px solid var(--line); border-radius:8px; background:#fff; display:block; }
+canvas { touch-action:none; cursor:crosshair; }
+#result { display:flex; align-items:center; justify-content:center; color:var(--muted); overflow:hidden; }
+#result img { width:100%; height:100%; object-fit:contain; image-rendering:auto; }
+#result.loading { opacity:.5; }
+.tools { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:12px; }
+button, .button, .file { font:inherit; font-size:.9rem; padding:7px 14px; border:1px solid var(--line); border-radius:8px; background:#fafaf8; color:var(--ink); cursor:pointer; text-decoration:none; }
+button.active { border-color:var(--ink); }
+.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+.button.disabled { pointer-events:none; opacity:.4; }
+.file input { display:none; }
+.live { display:block; margin-top:10px; font-size:.9rem; color:var(--muted); }
+.meta { font-size:.85rem; color:var(--muted); min-height:1.2em; }
+footer { max-width:1120px; margin:0 auto; padding:0 16px 32px; color:var(--muted); font-size:.85rem; }

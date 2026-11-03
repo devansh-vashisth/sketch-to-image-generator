@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sketch-to-Image Generator</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Sketch-to-Image Generator</h1>
+    <p class="sub">Pix2Pix conditional GAN · U-Net generator + PatchGAN discriminator</p>
+    <span id="status" class="pill">checking model…</span>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>1 · Draw a sketch</h2>
+      <canvas id="pad" width="512" height="512"></canvas>
+      <div class="tools">
+        <button data-tool="pen" class="active">Pen</button>
+        <button data-tool="eraser">Eraser</button>
+        <label>Size <input id="size" type="range" min="1" max="20" value="3"></label>
+        <button id="undo">Undo</button>
+        <button id="clear">Clear</button>
+        <label class="file">Upload<input id="upload" type="file" accept="image/*"></label>
+      </div>
+      <label class="live"><input id="live" type="checkbox"> Generate automatically after each stroke</label>
+    </section>
+
+    <section class="panel">
+      <h2>2 · Generated image</h2>
+      <div id="result"><span>Output appears here</span></div>
+      <div class="tools">
+        <button id="generate" class="primary">Generate</button>
+        <a id="download" class="button disabled" download="generated.png">Download</a>
+      </div>
+      <p id="meta" class="meta"></p>
+    </section>
+  </main>
+
+  <footer>Strokes are cropped, centred, binarised and resized before they go to the generator (see <code>s2i/sketch.py</code>).</footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
