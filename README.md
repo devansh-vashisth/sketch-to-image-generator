@@ -31,6 +31,10 @@ canvas in the browser, and a FastAPI backend runs the trained PyTorch generator.
 | `scripts/download_data.py` | Downloads edges2shoes / edges2handbags |
 | `scripts/prepare_dataset.py` | Builds your own paired dataset from any photo folder |
 | `scripts/plot_curves.py` | Loss and metric curves for the report |
+| `scripts/make_comparison.py` | Sketch / L1-only / Pix2Pix / ground-truth comparison figure |
+| `docs/Sketch2Image_Summary.pptx` | 12-slide project summary deck |
+| `docs/Sketch2Image_Project_Report.pdf` | Full written project report (`python docs/build_report_pdf.py` rebuilds it) |
+| `docs/DL_Concepts_Sketch2Image.pdf` | Deep-learning concepts used in the project |
 
 ## Setup
 
