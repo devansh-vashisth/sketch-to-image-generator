@@ -52,6 +52,8 @@ class FIDCalculator:
         r, f = np.concatenate(self.real), np.concatenate(self.fake)
         mu_r, mu_f = r.mean(0), f.mean(0)
         s_r, s_f = np.cov(r, rowvar=False), np.cov(f, rowvar=False)
-        covmean, _ = linalg.sqrtm(s_r @ s_f, disp=False)
-        covmean = covmean.real
+        covmean = linalg.sqrtm(s_r @ s_f)
+        if isinstance(covmean, tuple):  # older SciPy may return (sqrtm, errest)
+            covmean = covmean[0]
+        covmean = np.nan_to_num(covmean).real
         return float(((mu_r - mu_f) ** 2).sum() + np.trace(s_r + s_f - 2 * covmean))

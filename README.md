@@ -105,15 +105,34 @@ CLI alternative: `python infer.py --checkpoint runs/pix2pix/checkpoints/best.pt 
 
 ## Results
 
-Fill this in after training. `evaluate.py` prints the numbers.
+Trained on an RTX 3050 6 GB laptop GPU with a reduced budget: 3,000 edges2shoes training pairs at
+128×128 px, batch 8, AMP. Pix2Pix ran 12 + 8 decay epochs (~35 s/epoch). The L1-only baseline ran
+7 + 5 decay epochs. Each model is evaluated at its best-val-SSIM checkpoint (epoch 12 for both) on
+all 200 edges2shoes val images (`runs/*/eval/metrics.json`).
 
 | Model | L1 ↓ | PSNR ↑ | SSIM ↑ | FID ↓ |
 |---|---|---|---|---|
-| L1 only (`--lambda-gan 0`) | | | | |
-| Pix2Pix (cGAN + L1) | | | | |
+| L1 only (`--lambda-gan 0`) | 0.0745 | 18.17 dB | 0.733 | 176.2 |
+| Pix2Pix (cGAN + L1) | 0.0862 | 16.51 dB | 0.695 | 184.0 |
 
-L1-only output usually scores well on PSNR but looks blurry. The cGAN gives sharper, more
-realistic texture and a lower FID.
+![sketch / L1-only / Pix2Pix / ground truth](docs/comparison.png)
+
+*Rows, top to bottom: input sketch, L1-only, Pix2Pix, ground truth.*
+
+**Discussion.**
+- **Pixel metrics favour L1-only, as expected.** L1, PSNR and SSIM reward predicting the
+  per-pixel mean, so the L1-only model wins on them. Its output is a smooth, uniform brown
+  shoe with no texture (row 2).
+- **Pix2Pix looks sharper.** The adversarial loss pushes it towards high-frequency texture,
+  laces, colour variation and specular detail (row 3). With this little training, that texture
+  is noisy and shows some checkerboard artefacts.
+- **FID is not conclusive here.** It is computed on only 200 images, which makes it high-variance
+  and biased upwards, so the 8-point gap is within noise. Use ≥2k images and a longer run
+  (the full 10k × 256 px schedule above) for a meaningful FID comparison.
+- **The validation curve is noisy.** Validation runs the generator in `eval()` mode, which uses
+  BatchNorm running statistics. With batch 8 and short training, those statistics are unstable,
+  so val SSIM/PSNR swing between epochs (see `runs/pix2pix/curves.png`). Two remedies:
+  `--norm instance`, or keeping BN in train mode at test time as the original Pix2Pix does.
 
 ## References
 - Isola et al., *Image-to-Image Translation with Conditional Adversarial Networks*, CVPR 2017
